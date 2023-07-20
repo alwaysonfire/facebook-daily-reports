@@ -63,8 +63,6 @@ const cxnInit = async () => {
       eventsData = [];
     }
   }
-
-  process.exit(0);
 };
-
+cxnInit();
 cron.schedule('0 0 * * *', cxnInit);
