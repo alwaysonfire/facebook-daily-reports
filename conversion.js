@@ -1,5 +1,6 @@
 const bizSdk = require('facebook-nodejs-business-sdk');
 const { cxnGetReportJsonData } = require('./service');
+const cron = require('node-cron');
 
 const cxnInit = async () => {
   console.log('Pulling from connexity');
@@ -66,4 +67,4 @@ const cxnInit = async () => {
   process.exit(0);
 };
 
-cxnInit();
+cron.schedule('0 0 * * *', cxnInit);
