@@ -5,7 +5,7 @@ const cron = require('node-cron');
 const cxnInit = async () => {
   console.log('Pulling from dailypull');
   const data = await dailyPullGetStatsMedia();
-
+  console.log('data.length', data.length);
   const Content = bizSdk.Content;
   const CustomData = bizSdk.CustomData;
   const DeliveryCategory = bizSdk.DeliveryCategory;
@@ -66,4 +66,4 @@ const cxnInit = async () => {
   }
 };
 cxnInit();
-cron.schedule('0 0 * * *', cxnInit);
+cron.schedule('0 1 * * *', cxnInit);
