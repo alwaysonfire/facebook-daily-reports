@@ -13,7 +13,10 @@
     "axios": "^1.4.0",
     "dotenv": "^16.3.1",
     "facebook-nodejs-business-sdk": "^17.0.1",
+    "moment": "^2.29.4",
+    "mongodb": "^5.7.0",
     "node-cron": "^3.0.2",
-    "papaparse": "^5.4.1"
+    "papaparse": "^5.4.1",
+    "path": "^0.12.7"
   }
 }

@@ -1,12 +1,11 @@
 const bizSdk = require('facebook-nodejs-business-sdk');
-const { cxnGetReportJsonData } = require('./service');
+const { dailyPullGetStatsMedia } = require('./service');
 const cron = require('node-cron');
 
 const cxnInit = async () => {
-  console.log('Pulling from connexity');
+  console.log('Pulling from dailypull');
+  const data = await dailyPullGetStatsMedia();
 
-  const cxnData = await cxnGetReportJsonData();
-  console.log('cxnData', cxnData);
   const Content = bizSdk.Content;
   const CustomData = bizSdk.CustomData;
   const DeliveryCategory = bizSdk.DeliveryCategory;
@@ -23,8 +22,10 @@ const cxnInit = async () => {
 
   let eventsData = [];
 
-  for (const [index, item] of cxnData.entries()) {
-    const userData = new UserData().setEmails([item.accountName]);
+  for (const [index, item] of data.entries()) {
+    const userData = new UserData()
+      .setEmails([item.accountName])
+      .setFbc(item.stats.rid);
 
     const content = new Content().setId(item.stats.placementId);
 
@@ -44,7 +45,7 @@ const cxnInit = async () => {
 
     // Check if eventsData reaches 1000 or it's the last iteration
     const isBatchReady =
-      eventsData.length === 1000 || index === cxnData.length - 1;
+      eventsData.length === 1000 || index === data.length - 1;
 
     if (isBatchReady) {
       console.log('Processing batch:', eventsData.length);
